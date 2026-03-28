@@ -36,10 +36,6 @@ public class UserService {
                     log.error("Employee Not Found! Please try again");
                     return new UserNotFoundException("Employee Not Found");
                 });
-        if(!employee.getEmpEmail().equals(currentUsername)){
-            log.error("Unauthorized access attempt by:{}",currentUsername);
-            throw new UnauthorizedException("Unauthorized access attempt");
-        }
         if(!isAdmin && !employee.getEmpEmail().equals(currentUsername)){
             throw new UnauthorizedException("Unauthorized access attempt");
         }
@@ -65,9 +61,6 @@ public class UserService {
         if(!isAdmin && !employee.getEmpEmail().equals(currentUsername)){
             throw new UnauthorizedException("Unauthorized access attempt");
         }
-        if(!employee.getEmpEmail().equals(currentUsername)){
-            throw new UnauthorizedException("Unauthorized access attempt");
-        }
         userMapper.mapEmployee(employee,dto,encoder);
         Employee updateEmp=employeeRepository.save(employee);
         return new ApiResponse<>(
@@ -89,9 +82,6 @@ public class UserService {
                 .orElseThrow(()->
                         new UserNotFoundException("Employee Not Found")
                 );
-        if(!employee.getEmpEmail().equals(currentUsername)){
-            throw new UnauthorizedException("Unauthorized access attempt");
-        }
         if(!isAdmin && !employee.getEmpEmail().equals(currentUsername)){
             throw new UnauthorizedException("Unauthorized access attempt");
         }
